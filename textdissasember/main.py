@@ -15,7 +15,7 @@ class articleDissasembler:
             # text stuff
             text = self.file[x].get_text().encode("utf8")
             decoded = text.decode()
-            pages.append(text)
+            pages.append(decoded)
             #image stuff
             images = self.file[x].get_images()
             for index, y in enumerate(images, start=1):
