@@ -1,7 +1,10 @@
 import fitz
 import tabula
 import pandas
+from sympy import preview
 from pptx import Presentation
+
+
 
 class articleDissasembler:
     def __init__(self, fileName):
@@ -67,10 +70,13 @@ class articleDissasembler:
 
          
 
-a = articleDissasembler("tablesample.pdf")
-b = a.extractTables()
+# a = articleDissasembler("tablesample.pdf")
+# b = a.extractTables()
 
-print(b)
+# print(b)
+
+preview(r'$$\int_0^1 e^x\,dx$$', viewer='file', filename='test.png', euler=False)
+
 
     
 
