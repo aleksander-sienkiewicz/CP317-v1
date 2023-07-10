@@ -1,0 +1,4 @@
+pymupdf
+pptx
+pypdf
+pdfplumber
