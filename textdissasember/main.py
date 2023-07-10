@@ -1,9 +1,7 @@
 import fitz
 import tabula
 import pandas
-from sympy import preview
-from pptx import Presentation
-
+import os
 
 
 class articleDissasembler:
@@ -42,43 +40,59 @@ class articleDissasembler:
             page = []
 
         return(tablepage)
-    def getEquations(self):
-        a = self.extractTextAndImages()
+    def extractParagraphs(self):
+        page = self.extractTextAndImages()
         temp = ""
-        counter = 0
-        line = 0
-        for i in range(0,len(a[4])-1):
-            if (a[4][i] != '\n'):
-                counter +=1
-            else:
-                print(counter, line)
-                line += 1
-                counter = 0
-        # page = self.file.new_page()
-        # text = '\xe2\x8e\xaa\xe2\x8e\xa9\n\xe2\x8e\xaa\xe2\x8e\xa8\n\xe2\x8e\xa7\n\xe2\x89\xa0\n\xe2\x88\x92\n=\n= \xe2\x88\x91\n\xe2\x89\xa0\nj\n'
-        # p = fitz.Point(50, 72) 
+        paragraph = ""
+        paraPage = []
+        denom = 1
+        numer = 1
+        for x in range(0, len(page)):
+            paragraphs = []
+            for y in range(0, len(page[x])):
+                if (page[x][y] == "\n"):
+                    numer += len(temp)
+                    denom += 1
+                    temp =""
+                else:
+                    temp += page[x][y]
+        temp = ""
+        avg = numer/denom
 
-        # rc = page.insert_text(p,  # bottom-left of 1st char
-        #                     text,  # the text (honors '\n')
-        #                     fontname = "helv",  # the default font
-        #                     fontsize = 11,  # the default font size
-        #                     rotate = 0,  # also available: 90, 180, 270
-        #                     )
-        # print("%i lines printed on page %i." % (rc, page.number))
+        for x in range(0, len(page)):
+            paragraphs = []
+            for y in range(0, len(page[x])):
+                if (page[x][y] == "\n"):
+                    if (len(temp) < avg):
+                        if (len(paragraph) < avg*4 and len(paragraphs)-1 > 0):
+                            paragraphs[len(paragraphs)-1] += paragraph
+                        else:
+                            paragraph += temp
+                            paragraphs.append(paragraph)
+                        paragraph = ""
+                    else:
+                        paragraph += temp
+                    temp = ""
+                else:
+                    temp += page[x][y]
+            paraPage.append(paragraphs)
+        final = []
+        for x in range(0, len(paraPage)):
+            finalParas = []
+            for y in range(0, len(paraPage[x])):
+                if (len(paraPage[x][y]) > avg*3):
+                    finalParas.append(paraPage[x][y])
+            final.append(finalParas)
+        
+        
+        return(final)
 
-        # self.file.save("output2.pdf")
 
-         
+a = articleDissasembler("test2.pdf")
 
-# a = articleDissasembler("tablesample.pdf")
-# b = a.extractTables()
-
-# print(b)
-
-preview(r'$$\int_0^1 e^x\,dx$$', viewer='file', filename='test.png', euler=False)
-
-
+b = a.extractParagraphs()
     
+print(b[0][1])
 
 
 
