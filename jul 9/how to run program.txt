@@ -1,0 +1,13 @@
+file/pypdfproj
+  ->env (env for handling imports, i explain down below how to set up)
+  ->pdf2ppt.py (code)
+  ->uploads (retrieve pdf from here, output ppt here)
+
+1. setting up env:
+in vscode terminal with project open. 
+  python -m venv env
+(windows) env\Scripts\activate.bat --idk i dont use windows
+(mac/Linux) source env/bin/activate 
+2. install imports (pdfminer, pptx)
+  pip install pdfminer.six pptx
+good to go!
