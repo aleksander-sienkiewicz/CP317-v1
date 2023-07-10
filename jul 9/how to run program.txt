@@ -1,6 +1,7 @@
-file/pypdfproj
+my file directory looks like: User/Documents/pypdfproj
+inside pypdfproj is:
   ->env (env for handling imports, i explain down below how to set up)
-  ->pdf2ppt.py (code)
+  ->pdf2ppt.py (python code)
   ->uploads (retrieve pdf from here, output ppt here)
 
 1. setting up env:
