@@ -1,4 +1,5 @@
 import PyPDF2
+import fitz
 import pdfplumber
 from transformers import pipeline
 import nltk
@@ -10,11 +11,21 @@ class createPowerPoint():
          self.file_path = fileName
          self.prs = Presentation()
 
+    def extract_text(self):
+        file = fitz.open(self.file_path)
+        final = ""
+        endOfPage = []
+        for x in range(0, len(file)):
+            text = file[x].get_text().encode("utf8")
+            decoded = text.decode()
+            final += " "
+            final += decoded
+            endOfPage.append(len(final)// 1024)
 
-    def summarize_pdf(self):
-        # Read the PDF document
-        with pdfplumber.open(self.file_path) as pdf:
-            text = ' '.join(page.extract_text() for page in pdf.pages)
+        return(final, endOfPage)
+
+    def summarize_pdf(self, text):
+       # Read the PDF document
             
         # Tokenize the text into sentences
         sentences = nltk.sent_tokenize(text)
@@ -37,6 +48,7 @@ class createPowerPoint():
         return summaries
 
 
+
     def add_summaries(self,summaries, output_file):
         # Create a PowerPoint presentation
         # Set the width and height of a slide
@@ -44,7 +56,6 @@ class createPowerPoint():
         slide_height = Inches(7.5)
         self.prs.slide_width = slide_width
         self.prs.slide_height = slide_height
-
         for i, summary in enumerate(summaries):
             # Add a slide with a title and content
             slide_layout = self.prs.slide_layouts[1]
@@ -61,6 +72,9 @@ class createPowerPoint():
 
 # Usage example
 
-a = createPowerPoint("/Users/ahmedshahid/Desktop/Laurier CS/CP317/PDF to PPT Code/test2.pdf")
-summaries = a.summarize_pdf("/Users/ahmedshahid/Desktop/Laurier CS/CP317/PDF to PPT Code/test2.pdf")
-a.create_presentation(summaries, "/Users/ahmedshahid/Desktop/Laurier CS/CP317/PDF to PPT Code/presentation.pptx")
+a = createPowerPoint("test2.pdf")
+text, endOfPage = a.extract_text()
+print(endOfPage)
+# summaries = a.summarize_pdf(text)
+
+# a.add_summaries(summaries, "./text.pptx")
