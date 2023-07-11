@@ -83,16 +83,14 @@ class articleDissasembler:
                 if (len(paraPage[x][y]) > avg*3):
                     finalParas.append(paraPage[x][y])
             final.append(finalParas)
-        
-        
         return(final)
 
 
-a = articleDissasembler("test2.pdf")
+a = articleDissasembler("tablesample.pdf")
 
-b = a.extractParagraphs()
+b = a.extractTables()
     
-print(b[0][1])
+print(b)
 
 
 
