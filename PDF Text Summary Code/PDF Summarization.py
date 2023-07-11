@@ -8,6 +8,7 @@ from pptx.util import Inches, Pt
 class createPowerPoint():
     def __init__(self, fileName):
          self.file_path = fileName
+         self.prs = Presentation()
 
 
     def summarize_pdf(self):
@@ -36,19 +37,18 @@ class createPowerPoint():
         return summaries
 
 
-    def create_presentation(summaries, output_file):
+    def add_summaries(self,summaries, output_file):
         # Create a PowerPoint presentation
-        prs = Presentation()
         # Set the width and height of a slide
         slide_width = Inches(10)
         slide_height = Inches(7.5)
-        prs.slide_width = slide_width
-        prs.slide_height = slide_height
+        self.prs.slide_width = slide_width
+        self.prs.slide_height = slide_height
 
         for i, summary in enumerate(summaries):
             # Add a slide with a title and content
-            slide_layout = prs.slide_layouts[1]
-            slide = prs.slides.add_slide(slide_layout)
+            slide_layout = self.prs.slide_layouts[1]
+            slide = self.prs.slides.add_slide(slide_layout)
             title = slide.shapes.title
             content = slide.placeholders[1]
             # Set the title and content
@@ -56,7 +56,7 @@ class createPowerPoint():
             content.text = summary
 
         # Save the presentation
-        prs.save(output_file)
+        self.prs.save(output_file)
 
 
 # Usage example
