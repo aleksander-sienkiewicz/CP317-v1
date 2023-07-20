@@ -11,19 +11,6 @@ class createPowerPoint():
          self.file_path = fileName
          self.prs = Presentation()
 
-    def extract_text(self):
-        file = fitz.open(self.file_path)
-        final = ""
-        endOfPage = []
-        for x in range(0, len(file)):
-            text = file[x].get_text().encode("utf8")
-            decoded = text.decode()
-            final += " "
-            final += decoded
-            endOfPage.append(len(final)// 1024)
-
-        return(final, endOfPage)
-
     def summarize_pdf(self, text):
        # Read the PDF document
             
@@ -68,6 +55,8 @@ class createPowerPoint():
 
         # Save the presentation
         self.prs.save(output_file)
+
+        
 
 
 # Usage example
