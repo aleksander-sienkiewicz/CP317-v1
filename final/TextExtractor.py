@@ -46,7 +46,7 @@ class articleDissasembler:
 
         #gets tables in each page
         for i in (range(1,(self.length+1))):
-            page = [0]
+            page = []
             stri = str(i)
             table = tabula.read_pdf(self.fileName, pages=stri, multiple_tables=True, stream='true')
 
