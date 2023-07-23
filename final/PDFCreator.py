@@ -10,19 +10,18 @@ class createPowerPoint():
     def add_slides(self,summaries, images, tables, page_index):
         # Create a PowerPoint presentation
         # Set the width and height of a slide
-        a = 0
-        currpage = 0
+        currpage = 0 # is the current page in corrolation to the summaires
         slide_width = Inches(10)
         slide_height = Inches(7.5)
         self.prs.slide_width = slide_width
         self.prs.slide_height = slide_height
         for i, summary in enumerate(summaries):
-            self.add_summary(summary, i)
-            while (currpage < len(page_index) and i == page_index[currpage]):
+            self.add_summary(summary, i) # adds a summary slide
+            while (currpage < len(page_index) and i == page_index[currpage]): # checks if the slide corresponds to the end of the page. If it does add images and tables
                  a += 1
-                 for x in range(0, len(images[currpage])):
+                 for x in range(0, len(images[currpage])): # add slides for all images on the current page
                       self.add_image(images[currpage][x], currpage,x)
-                 for x in range(0, len(tables[currpage])):
+                 for x in range(0, len(tables[currpage])): # add tables for all tables on the current page
                       self.add_table(tables[currpage][x], currpage, x)
                  currpage += 1
         # Save the presentation
@@ -59,12 +58,12 @@ class createPowerPoint():
          x, y, cx, cy = Inches(1), Inches(1.5), Inches(8), Inches(5.5)
          shape = slide.shapes.add_table(len(table), len(table[0])-1, x, y, cx, cy)
          tab = shape.table
-         # add slide headers
+         # add table headers
          headers = table.dtype.names
          for i in range(1, len(headers)):
               cell = tab.cell(0,i-1)
               cell.text = headers[i]
-
+         #add table contents
          for rows in range(0,len(table)):
              for cols in range(1,len(table[rows])):
                   cell = tab.cell(rows,cols-1)

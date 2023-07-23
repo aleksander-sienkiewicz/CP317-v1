@@ -21,13 +21,13 @@ class articleDissasembler:
         endOfPage = []
 
         for x in range(0, self.length):
-            # text stuff
+            # extract text
             text = self.file[x].get_text().encode("utf8")
             decoded = text.decode()
             final += " "
             final += decoded
-            endOfPage.append(len(final)// 1024)
-            #image stuff
+            endOfPage.append(len(final)// 1024) # is the corrolation of what summarie is the end of the page used in summarize_pdf function
+            # extract mages
             imagesName = []
             images = self.file[x].get_images()
             for index, y in enumerate(images, start=1):
