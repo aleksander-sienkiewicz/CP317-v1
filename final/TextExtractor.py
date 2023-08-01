@@ -31,12 +31,15 @@ class articleDissasembler:
             imagesName = []
             images = self.file[x].get_images()
             for index, y in enumerate(images, start=1):
-                imagesName.append("images/page_%s-image_%s.png" % (x, index))
                 xref = y[0]
                 pix = fitz.Pixmap(self.file, xref)
-                if not pix.colorspace.name in (fitz.csGRAY.name, fitz.csRGB.name): # if the code cannot extract image in RGB get it in grayscale
-                    pix = fitz.Pixmap(fitz.csRGB, pix)
-                pix.save("images/page_%s-image_%s.png" % (x, index))
+                if pix.colorspace:
+                    if not pix.colorspace.name in (fitz.csGRAY.name, fitz.csRGB.name): # if the code cannot extract image in RGB get it in grayscale
+                        pix = fitz.Pixmap(fitz.csRGB, pix)
+
+                if (pix.width > 20 and pix.height > 20):
+                    imagesName.append("images/page_%s-image_%s.png" % (x, index))
+                    pix.save("images/page_%s-image_%s.png" % (x, index))
             self.images.append(imagesName)
         self.text = final
         self.endOfPage = endOfPage
