@@ -5,3 +5,4 @@ pdfplumber
 pypdf2
 tabula-py
 sympy
+fitz
